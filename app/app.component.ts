@@ -13,9 +13,10 @@ import { MessageService }    from './services/message.service';
             <div style="clear:both"></div>
         </div>
          
-        <div id="chatbox"><ul><li *ngFor="let message of messages">{{message.message}}</li></ul></div>
+        <div id="chatbox"><ul><li *ngFor="let message of messages"><b>{{message.name}}</b>: {{message.message}}</li></ul></div>
          
         <form action="" #f="ngForm" (ngSubmit)="sendMessage(f.value)">
+            <input name="name" ngModel [(ngModel)]="name" hidden>
             <input #newMessage
               name="message" ngModel [(ngModel)]="message" placeholder="Type your message here" size="63" >
             <button type="submit">Send</button>
@@ -26,35 +27,32 @@ import { MessageService }    from './services/message.service';
 })
 
 
-
 export class AppComponent implements OnInit {
 
 	//messages: Message[];
-  name = "tung";
+    name = "tung";
 	public messages: any[];
     public message: string;
 
 	constructor(private messageService: MessageService) { }
 
-	getMessages(): void {
-		 this.messageService.getMessages().subscribe((response:any) => {
-            this.messages = response;
-        }, error => {
-            console.log('System error api');
-        });
-  }
-
 	ngOnInit(): void {
 		this.getMessages();
 	}
 
-	sendMessage(data): void {
-    console.log(data);
-    this.message = '';
-	  this.messageService.sendMessage(data).subscribe(response=> {
+	getMessages(): void {
+		this.messageService.getMessages().subscribe((response:any) => {
+            this.messages = response;
+        }, error => {
+            console.log('System error api');
+        });
+    }
+
+	sendMessage(data: any): void {
+        this.message = '';
+        this.messageService.sendMessage(data).subscribe(response=> {
             if (response) {
                 this.getMessages();
-                console.log(response);
             }
         });
 	}
