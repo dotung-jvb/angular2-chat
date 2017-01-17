@@ -37,8 +37,8 @@ export class MessageService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
     sendMessage (data: any): Observable<any> {
-        return this.http.post(this.apiUrl, data) // ...using post request
-                         .map((res:Response) => {console.log(res)}); //...errors if any
+        return this.http.post(this.apiUrl, data)
+                         .map((res:Response) => {console.log(res)});
     }   
 
 /*  updateProfileInformation(message: Message) {
