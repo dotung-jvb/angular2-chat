@@ -29,17 +29,6 @@ export class MessageService {
   constructor (private http: Http) {}
 
   private apiUrl = 'http://58734f112f4460120032e673.mockapi.io/api/tung/';
-  //getMessages(): void {} // stub
-/*  getMessages(): Message[] {
-    return MESSAGES;
-  }*/
-  //getMessages(): Promise<Message[]> {
-/*  getMessages(): Message[] {
-    return this.http.get(this.apiUrl)
-               //.toPromise()
-               .then(response => response.json() as Message[])
-               .catch(this.handleError);
-  }*/
 
   getMessages(): Observable<any[]> {
     return this.http.get(this.apiUrl).map((response) => response.json() as Message[]);
@@ -47,30 +36,9 @@ export class MessageService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  // sendMessage(message: Message) {
-  //   /*console.log(message);*/
-  //   const url = this.apiUrl;
-  //   return this.http.post(url, JSON.stringify(message), {headers: this.headers})
-  //     .map((response: Response) => {
-  //       var result = response.json();
-  //       console.log(result);
-  //     };
-  //     //.toPromise()
-  //     //.then(() => message);
-
-  //   /*return this.http.post(url, message, { headers: headers })
-  //     .map((response: Response) => {
-  //       var result = response.json();
-  //       console.log(result);
-  //       return result;
-  //     })*/
-  // }
-
     sendMessage (data: any): Observable<any> {
-//console.log("aaaaaaaaaa");
         return this.http.post(this.apiUrl, data) // ...using post request
-                         .map((response) => {response.json() as Message[]}); //...errors if any
-        //return this.http.get(this.apiUrl).map((response) => response.json() as Message[]);
+                         .map((res:Response) => {console.log(res)}); //...errors if any
     }   
 
 /*  updateProfileInformation(message: Message) {
