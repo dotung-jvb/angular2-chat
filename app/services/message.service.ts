@@ -21,6 +21,7 @@ import { Message }                 from '../message';
   { id: 9, user: 'Magma', message: '1' },
   { id: 10, user: 'Tornado', message: '1' }
 ];*/
+export const MESSAGES: Message[] = [];
 
 @Injectable()
 export class MessageService {
@@ -41,7 +42,7 @@ export class MessageService {
   }*/
 
   getMessages(): Observable<any[]> {
-    return this.http.get(this.apiUrl).map((response) => response.json());
+    return this.http.get(this.apiUrl).map((response) => response.json() as Message[]);
   }
 
   private headers = new Headers({'Content-Type': 'application/json'});
@@ -68,7 +69,8 @@ export class MessageService {
     sendMessage (data: any): Observable<any> {
 //console.log("aaaaaaaaaa");
         return this.http.post(this.apiUrl, data) // ...using post request
-                         .map((res:Response) => {console.log(res)}); //...errors if any
+                         .map((response) => {response.json() as Message[]}); //...errors if any
+        //return this.http.get(this.apiUrl).map((response) => response.json() as Message[]);
     }   
 
 /*  updateProfileInformation(message: Message) {

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     name = "tung";
 	public messages: any[];
     public message: string;
-
+    public tmp_messages = {};
 	constructor(private messageService: MessageService) { }
 
 	ngOnInit(): void {
@@ -45,15 +45,14 @@ export class AppComponent implements OnInit {
 	}
 
 	getMessages(): void {
-        this.messageService.getMessages().subscribe((response:any)=> this.messages = response);
+        this.messageService.getMessages().subscribe((response:any)=> {this.messages = response});
     }
 
 	sendMessage(data: any): void {
-        this.message = '';
-        this.messageService.sendMessage(data).subscribe(response=> {
-            if (response) {
-                //this.getMessages();
-            }
+        this.tmp_messages = {name: name, message: this.message };
+        this.messageService.sendMessage(data).subscribe((response:any)=> {
+            this.messages.push(this.tmp_messages);
         });
+        this.message = '';
 	}
 }
