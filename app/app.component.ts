@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
     }
 
 	sendMessage(data: any): void {
-        this.tmp_messages = {name: name, message: this.message };
+        this.tmp_messages = {name: this.name, message: this.message };
         this.messageService.sendMessage(data).subscribe((response:any)=> {
             this.messages.push(this.tmp_messages);
         });
