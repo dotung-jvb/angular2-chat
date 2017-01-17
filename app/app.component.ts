@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Message }           from './message';
 import { MessageService }    from './services/message.service';
 
+//import * as io from 'socket.io-client';
+import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/Rx';
+
 @Component({
   selector: 'my-app',
   template: `<div class="container">
@@ -12,7 +17,7 @@ import { MessageService }    from './services/message.service';
             <p class="welcome">Welcome, <b>{{name}}</b></p>
             <div style="clear:both"></div>
         </div>
-         
+        
         <div id="chatbox"><ul><li *ngFor="let message of messages"><b>{{message.name}}</b>: {{message.message}}</li></ul></div>
          
         <form action="" #f="ngForm" (ngSubmit)="sendMessage(f.value)">
@@ -29,7 +34,6 @@ import { MessageService }    from './services/message.service';
 
 export class AppComponent implements OnInit {
 
-	//messages: Message[];
     name = "tung";
 	public messages: any[];
     public message: string;
@@ -41,18 +45,14 @@ export class AppComponent implements OnInit {
 	}
 
 	getMessages(): void {
-		this.messageService.getMessages().subscribe((response:any) => {
-            this.messages = response;
-        }, error => {
-            console.log('System error api');
-        });
+        this.messageService.getMessages().subscribe((response:any)=> this.messages = response);
     }
 
 	sendMessage(data: any): void {
         this.message = '';
         this.messageService.sendMessage(data).subscribe(response=> {
             if (response) {
-                this.getMessages();
+                //this.getMessages();
             }
         });
 	}
